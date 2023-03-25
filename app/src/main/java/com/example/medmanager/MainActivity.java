@@ -3,106 +3,89 @@ package com.example.medmanager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.medmanager.mydatabase.MedicalDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class MainActivity extends AppCompatActivity {
-    //    list of users:
-    public RecyclerView recyclerView;
-    //    database object:
-    public MedicalDB DbHelper;
-    public static TextView empty_view;
-    public UserListAdapter userlistAdapter;
-    public FloatingActionButton add_user_fab;
 
+    private RecyclerView recyclerView;
+    private MedicalDB medicalDB;
+    private TextView emptyView;
+    private UserListAdapter userListAdapter;
+    private FloatingActionButton addUserButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Database instantiation:
-        DbHelper = MedicalDB.getInstance(this.getApplicationContext());
 
+        medicalDB = MedicalDB.getInstance(this.getApplicationContext());
 
-        //Main activity for showing the list of users
-        //Initialize recycler view:
-        empty_view = (TextView) findViewById(R.id.user_empty);
+        emptyView = findViewById(R.id.user_empty);
+        Cursor userList = medicalDB.getUserList(medicalDB.getWritableDatabase());
 
-        Cursor user_list = DbHelper.getUserList(DbHelper.getWritableDatabase());
-        if(user_list.getCount() ==0){
-            empty_view.setText(R.string.empty_users);
+        if (userList.getCount() == 0) {
+            emptyView.setText(R.string.empty_users);
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.user_list);
-        add_user_fab = (FloatingActionButton) findViewById(R.id.add_user);
+        recyclerView = findViewById(R.id.user_list);
+        addUserButton = findViewById(R.id.add_user);
 
-        //Initialize layout manager (default = vertical) and set to the recycler view:
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //Instantiate object of recycler view by its adapter:
-        userlistAdapter = new UserListAdapter(getApplicationContext(),DbHelper);
-        userlistAdapter.setUserData(DbHelper.getUserList(DbHelper.getWritableDatabase()));
-        recyclerView.setAdapter(userlistAdapter);
+        userListAdapter = new UserListAdapter(getApplicationContext(), medicalDB);
+        userListAdapter.setUserData(userList);
+        recyclerView.setAdapter(userListAdapter);
 
-        add_user_fab.setOnClickListener(new View.OnClickListener() {
+        addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myTextDialog().show();
-
+                showAddUserDialog().show();
             }
         });
-
-
-
     }
 
-    private AlertDialog myTextDialog() {
-        View layout = View.inflate(this, R.layout.add_user_dialog, null);
-        EditText savedText = ((EditText) layout.findViewById(R.id.add_username));
+    private AlertDialog showAddUserDialog() {
+        View dialogLayout = View.inflate(this, R.layout.add_user_dialog, null);
+        EditText userNameEditText = dialogLayout.findViewById(R.id.add_username);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
-        builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                DbHelper.addUser(DbHelper.getWritableDatabase(),savedText.getText().toString().trim());
-                Cursor user_list = DbHelper.getUserList(DbHelper.getWritableDatabase());
-                userlistAdapter.setUserData(user_list);
-                userlistAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(userlistAdapter);
-                empty_view.setText("");
-
+                medicalDB.addUser(medicalDB.getWritableDatabase(), userNameEditText.getText().toString().trim());
+                Cursor userList = medicalDB.getUserList(medicalDB.getWritableDatabase());
+                userListAdapter.setUserData(userList);
+                userListAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(userListAdapter);
+                emptyView.setText("");
             }
         });
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+
+        dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-        builder.setView(layout);
-        return builder.create();
+
+        dialogBuilder.setView(dialogLayout);
+        return dialogBuilder.create();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        userlistAdapter.setUserData(DbHelper.getUserList(DbHelper.getWritableDatabase()));
-        userlistAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(userlistAdapter);
+        userListAdapter.setUserData(medicalDB.getUserList(medicalDB.getWritableDatabase()));
+        userListAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(userListAdapter);
     }
 }
