@@ -1,4 +1,3 @@
-Activity 2:
 Home Screen: The home screen also provides quick access to important features such as the refill reminder, appointment reminders, and medicine detailer. 
  
 Activity 3:
