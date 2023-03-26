@@ -14,6 +14,7 @@ public class MedicalDB extends SQLiteOpenHelper {
         if (sInstance == null) {
             sInstance = new MedicalDB(context.getApplicationContext());
         }
+        
         return sInstance;
     }
     
