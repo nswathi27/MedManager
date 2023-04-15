@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Medi Minder</string>
+    <string name="splash_image">splash_image</string>
+    <string name="medicine_page">medicine page</string>
+    <string name="empty_users">No users, Click (+) to add one.</string>
+    <string name = "Sign">Lets Sign You In</string>
+    <string name = "Password">Forgot Password</string>
+    <string name = "SignIn"> Sign In</string>
+    <string name = "account">Dont have an account?</string>
+    <string name = "SignUp">Sign Up</string>
+</resources>
