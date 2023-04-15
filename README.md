@@ -40,4 +40,11 @@
 > App is compatible with devices running Android 4.1 (Jelly Bean) or higher, which is equivalent to API level 16.
 > App is optimized for devices running Android 12.0 (S), which is equivalent to API level 32.
 
+---
+### Sequence Information :
+ * Open the app and enter your name and email address.
+ * After successfully authenticating the user, the user is redirected to Add Medicine page where a new user can be added.
+ * Next, by clicking the user icon it redirects to add medicine page where there exists (+) button.
+ * Clicking the (+) button, opens a dialog/prompt box which contains input fields for entering the medicine name, quantity. User can select time and also has toggle       button for repeating the reminder on the selected days.
+ * The reminder after adding can be enabled/disabled using the toggle button. When wenabled by the user, will show a toast message mentioning the reminder is set.
 
