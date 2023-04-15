@@ -14,17 +14,28 @@ public class MedicalDB extends SQLiteOpenHelper {
         if (sInstance == null) {
             sInstance = new MedicalDB(context.getApplicationContext());
         }
+<<<<<<< HEAD
         return sInstance;
     }
 
     public static final int version = 1;
     public MedicalDB(Context context) {
         super(context,context.getExternalFilesDir(null).getAbsolutePath() + "/database.db", null, version);
+=======
+        
+        return sInstance;
+    }
+    
+    public static final int version = 1;
+    public MedicalDB(Context context) {
+        super(context,"database",null, version);
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create_user_table = "CREATE TABLE USER (" +
+<<<<<<< HEAD
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "USER_NAME TEXT NOT NULL);";
         String create_med_table = "CREATE TABLE MEDICINE (" +
@@ -37,6 +48,20 @@ public class MedicalDB extends SQLiteOpenHelper {
                 "ENABLE INT NOT NULL,"+
                 "FOREIGN KEY(USER_ID) REFERENCES USER(_id)" +
                 "ON DELETE CASCADE);";
+=======
+                                        "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                        "USER_NAME TEXT NOT NULL);";
+        String create_med_table = "CREATE TABLE MEDICINE (" +
+                                        "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                        "MED_NAME TEXT NOT NULL," +
+                                        "QTY INTEGER NOT NULL," +
+                                        "DATE_TIME TEXT NOT NULL," +
+                                        "DAYS TEXT NOT NULL," +
+                                        "USER_ID INT NOT NULL," +
+                                        "ENABLE INT NOT NULL,"+
+                                        "FOREIGN KEY(USER_ID) REFERENCES USER(_id)" +
+                                        "ON DELETE CASCADE);";
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
         db.execSQL(create_user_table);
         db.execSQL(create_med_table);
     }
@@ -55,6 +80,7 @@ public class MedicalDB extends SQLiteOpenHelper {
     }
 
     //    USER CRUD OPERATIONS:
+<<<<<<< HEAD
     public void addUser(SQLiteDatabase writableDatabase, @NonNull String name)
     {
         SQLiteDatabase db = getWritableDatabase();
@@ -89,6 +115,31 @@ public class MedicalDB extends SQLiteOpenHelper {
     //    MEDICINE CRUD OPERATION:
     public void addMedicine(SQLiteDatabase writableDatabase, @NonNull int user_id, @NonNull String med_name, @NonNull int quantity, @NonNull String date_time, @NonNull String days){
         SQLiteDatabase db = getWritableDatabase();
+=======
+    public void addUser(SQLiteDatabase db, @NonNull String name)
+    {
+        ContentValues values = new ContentValues();
+        values.put("USER_NAME",name);
+        db.insert("USER",null,values);
+    }
+    public void deleteUser(SQLiteDatabase db, @NonNull String user_id){
+        db.delete("USER","_id=?",new String[]{user_id});
+    }
+    public void updateUser(SQLiteDatabase db, @NonNull int user_id, @NonNull String name){
+        ContentValues values = new ContentValues();
+        values.put("USER_NAME",name);
+        db.update("USER",values,"_id=?",new String[]{""+user_id});
+    }
+
+    public String getUserName(SQLiteDatabase db, @NonNull int user_id){
+        Cursor user = db.rawQuery("SELECT * FROM USER WHERE _id="+user_id+";",new String[]{});
+        user.moveToFirst();
+        return user.getString(1);
+    }
+
+//    MEDICINE CRUD OPERATION:
+    public void addMedicine(SQLiteDatabase db, @NonNull int user_id, @NonNull String med_name, @NonNull int quantity, @NonNull String date_time, @NonNull String days){
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
         ContentValues values = new ContentValues();
         values.put("USER_ID",user_id);
         values.put("MED_NAME",med_name);
@@ -97,6 +148,7 @@ public class MedicalDB extends SQLiteOpenHelper {
         values.put("DAYS",days);
         values.put("ENABLE",false);
         db.insert("MEDICINE",null,values);
+<<<<<<< HEAD
         db.close();
     }
 
@@ -106,6 +158,13 @@ public class MedicalDB extends SQLiteOpenHelper {
         db.close();
     }
 
+=======
+    }
+
+    public void deleteMedicine(SQLiteDatabase db, @NonNull int med_id){
+        db.delete("MEDICINE","_id=?",new String[]{""+med_id});
+    }
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
     public void updateMedicine(SQLiteDatabase db,@NonNull int med_id, @NonNull String med_name, @NonNull int quantity, @NonNull String date_time, @NonNull String days){
         ContentValues values = new ContentValues();
         values.put("MED_NAME",med_name);

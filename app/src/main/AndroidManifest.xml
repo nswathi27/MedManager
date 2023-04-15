@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="com.example.medmanager" >
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,10 +11,19 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+=======
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.MedManager" >
         <activity
             android:name=".UserActivity"
@@ -25,12 +35,19 @@
         <activity android:name=".AlarmActivity" />
         <activity android:name=".MedicineActivity" />
         <activity android:name=".SplashActivity"
+=======
+        android:theme="@style/Theme.MedManager"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+<<<<<<< HEAD
         </activity>
         <activity android:name=".MainActivity" />
 
@@ -43,6 +60,13 @@
                 <action android:name="com.example.medmanager.ACTION_SET_ALARM"/>
             </intent-filter>
         </receiver>
+=======
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
     </application>
 
 </manifest>

@@ -3,7 +3,10 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@drawable/med3"
+<<<<<<< HEAD
     android:exported="true"
+=======
+>>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ProgressBar
