@@ -1,6 +1,14 @@
 # App Name : MedManager
 > ### An Android application that displays a person's medication schedules or timings on a single device. Reminders that include the quantity of the medicine, name of the medicine and all of its other details.
 
+* activity_main - It is the login page where user can enter their credentails and also has a signup button if user is a new user.
+* activity_user-It adds name of the user by clicking add button 
+* add_user_dialog – Used for adding new user to the application.
+* user_card – It displays the list of all the users.
+* add_med_dialog -It takes the medicine details such as medicine name, quantity, reminder time and days.
+* activity_medicine – It shows the medicine list taken by the user.
+
+
 ### Features
  * Add new medicine
  * Update medicine
