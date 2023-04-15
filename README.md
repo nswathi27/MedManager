@@ -12,10 +12,10 @@
 
 
 #### Team Members :
-1. Vineetha Aredla ()
+1. Vineetha Aredla (S554808)
 2. Swathi Nuli (S555089)
-3. Amani Chennu ()
-4. Swarnalatha Yadla (S)
+3. Amani Chennu (S549242)
+4. Swarnalatha Yadla (S556383)
 
 #### Test Credentials :
 > Username : Amani
