@@ -1,4 +1,4 @@
-package com.example.medmanager;
+package com.Project.medmanager;
 
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -16,13 +16,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.medmanager.mydatabase.MedicalDB;
+import com.Project.medmanager.mydatabase.MedicalDB;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MedicineActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
-//    medicine list for user with id = user_id;
+
     public RecyclerView medList;
     public TextView medUserName;
     public MedicineListAdapter medListAdapter;
@@ -34,7 +34,6 @@ public class MedicineActivity extends AppCompatActivity implements TimePickerDia
     ChipGroup chipGroup;
     Chip sun,mon,tue,wed,thu,fri,sat;
 
-//    database:
     public MedicalDB DbHelper;
 
     @Override
@@ -44,7 +43,7 @@ public class MedicineActivity extends AppCompatActivity implements TimePickerDia
         DbHelper = MedicalDB.getInstance(getApplicationContext());
         user_id = getIntent().getIntExtra("userId",0);
 
-        //Connect views to the activity:
+
         medList = findViewById(R.id.med_list);
         medUserName = findViewById(R.id.med_user_name);
         medFab = findViewById(R.id.med_fab);
@@ -102,11 +101,11 @@ public class MedicineActivity extends AppCompatActivity implements TimePickerDia
 
 
         View layout = View.inflate(this, R.layout.add_med_dialog, null);
-//        medicine details:
+
         medName = layout.findViewById(R.id.add_med_name);
         medQty = layout.findViewById(R.id.add_med_qty);
         medTime = layout.findViewById(R.id.add_med_time);
-//        UI components:
+
         isRepeat = layout.findViewById(R.id.repeat_switch);
         chipGroup = layout.findViewById(R.id.chip_group);
         setChildrenEnabled(chipGroup,false);
