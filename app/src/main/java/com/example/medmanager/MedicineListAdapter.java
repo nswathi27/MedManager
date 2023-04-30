@@ -1,10 +1,14 @@
-package com.example.medmanager;
+package com.Project.medmanager;
+
+
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.medmanager.mydatabase.MedicalDB;
+import com.Project.medmanager.mydatabase.MedicalDB;
 
 import java.util.Calendar;
 
@@ -50,10 +54,6 @@ public class MedicineListAdapter extends RecyclerView.Adapter{
     public MedicineHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_card,parent,false);
         MedicineHolder vh = new MedicineHolder(v);
-<<<<<<< HEAD
-=======
-        
->>>>>>> e1554933036cee1d61654db8f1740e6932a7dbd1
         return vh;
     }
 
@@ -83,7 +83,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter{
                     String[] raw_time = c.getString(3).split(":",2);
                     int hour = Integer.parseInt(raw_time[0]);
                     int min = Integer.parseInt(raw_time[1]);
-
+                    Log.d("Time",hour+" "+min+" time");
                     Calendar cal = Calendar.getInstance();
                     cal.set(Calendar.HOUR_OF_DAY, hour);
                     cal.set(Calendar.MINUTE, min);
@@ -93,9 +93,8 @@ public class MedicineListAdapter extends RecyclerView.Adapter{
                     now.set(Calendar.SECOND, 0);
                     now.set(Calendar.MILLISECOND, 0);
 
-
-
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+
                     Intent intent = new Intent(context,AlarmBroadcastReceiver.class);
                     intent.putExtra("medName",c.getString(1));
                     intent.putExtra("medQty",c.getString(2));
@@ -103,36 +102,53 @@ public class MedicineListAdapter extends RecyclerView.Adapter{
                     intent.putExtra("userName",helper.getUserName(helper.getWritableDatabase(),user_id));
 
                     if(((MedicineHolder) holder).toggleSwitch.isChecked()){
-                        //set alarm
 
-                        String days = c.getString(4);
-                        if(days.equals("0000000")){
-                            if(cal.before(now)){
-                                cal.add(Calendar.DATE, 1);
-                            }
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id),intent,0);
+                        PendingIntent pendingIntent;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            pendingIntent = PendingIntent.getBroadcast(context, Integer.parseInt(user_id+""+((MedicineHolder) holder).id), intent, PendingIntent.FLAG_IMMUTABLE);
+
+                        } else {
+                             pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id),intent,0);
+                        }
                             alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+                            Log.d("adapter", String.valueOf(cal.getTimeInMillis()));
 
                             Toast.makeText(context, "Reminder set for "+c.getString(1)+" on "+cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE) + ", "+cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            int ct=1;
-                            for(char d : days.toCharArray()){
+                        //set alarm
 
-                                if(d == '1'){
-                                    cal.set(Calendar.DAY_OF_WEEK,ct);
-                                    if(cal.before(now)){
-                                        cal.add(Calendar.DATE, 7);
-                                    }
 
-                                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id + ""+ct),intent,PendingIntent.FLAG_IMMUTABLE);
-                                    System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-                                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY * 7,pendingIntent);
-                                }
-                                ct++;
-                            }
-                            Toast.makeText(context, "Reminder set for "+c.getString(1)+" on "+cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE), Toast.LENGTH_SHORT).show();
-                        }
+//                        String days = c.getString(4);
+//                        if(days.equals("0000000")){
+//                            if(cal.before(now)){
+//                                cal.add(Calendar.DATE, 1);
+//                            }
+//                            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id),intent,0);
+//                            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+//                            Log.d("adapter", String.valueOf(cal.getTimeInMillis()));
+//
+//                            Toast.makeText(context, "Reminder set for "+c.getString(1)+" on "+cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE) + ", "+cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
+//                        }
+//                        else{
+//                            int ct=1;
+//                            for(char d : days.toCharArray()){
+//
+//                                if(d == '1'){
+//                                    cal.set(Calendar.DAY_OF_WEEK,ct);
+//                                    if(cal.before(now)){
+//                                        cal.add(Calendar.DATE, 7);
+//                                    }
+//
+//                                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id + ""+ct),intent,PendingIntent.FLAG_IMMUTABLE);
+//                                    System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//
+//                                    Log.d("adapter", String.valueOf(cal.getTimeInMillis()));
+//
+//                                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY * 7,pendingIntent);
+//                                }
+//                                ct++;
+//                            }
+//                            Toast.makeText(context, "Reminder set for "+c.getString(1)+" on "+cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE), Toast.LENGTH_SHORT).show();
+//                        }
 
                     }
                     else{
@@ -147,9 +163,6 @@ public class MedicineListAdapter extends RecyclerView.Adapter{
                             for(char d : days.toCharArray()){
 
                                 if(d == '1'){
-
-
-
                                     PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(user_id+""+((MedicineHolder) holder).id + ""+ct),intent,PendingIntent.FLAG_IMMUTABLE);
                                     alarmManager.cancel(pendingIntent);
                                 }
