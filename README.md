@@ -1,5 +1,5 @@
 # App Name : MedManager
-> ### An Android application that displays a person's medication schedules or timings. Reminders that include the quantity of the medicine, name of the medicine and all of its other details.
+> ### An Android application that displays a person's medication schedules or timings. Reminders that include the quantity of the medicine, name of the medicine and all of its other details. 
 
 * activity_main - It is the login page where user can enter their credentails and also has a signup button if user is a new user.
 * activity_user-It adds name of the user by clicking add button 
@@ -7,6 +7,7 @@
 * user_card – It displays the list of all the users.
 * add_med_dialog -It takes the medicine details such as medicine name, quantity, reminder time and days.
 * activity_medicine – It shows the medicine list taken by the user.
+
 
 
 ### Features
@@ -55,4 +56,7 @@
  * Next, by clicking the user icon it redirects to add medicine page where there exists (+) button.
  * Clicking the (+) button, opens a dialog/prompt box which contains input fields for entering the medicine name, quantity. User can select time and also has toggle       button for repeating the reminder on the selected days.
  * The reminder after adding can be enabled/disabled using the toggle button. When wenabled by the user, will show a toast message mentioning the reminder is set.
+ * At the time of the alarm, A notification pop ups when clicked, will take us to the app which has buttons -> Took Medicine and Snooze Alarm and shows the details of the user along with the medicine. 
+ * Clicking on Took Medicine Button, will take us back to the users list page and stop the alarm. Whereas, clicking on snooze alarm will set a timer again for 10 minutes from current time.
+ * Snooze has not been completely implemented.
 
